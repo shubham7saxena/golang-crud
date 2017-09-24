@@ -20,10 +20,6 @@ type user struct {
 
 var db *sql.DB
 
-const (
-	readOneQuery = "SELECT from users WHERE name='%s' AND age='%d'"
-)
-
 func main() {
 	var err error
 
@@ -37,16 +33,8 @@ func main() {
 	router.HandleFunc("/ping", handler.PingHandler).Methods("GET")
 	router.HandleFunc("/user", handler.CreateNewUserHandler).Methods("PUT")
 	router.HandleFunc("/users", handler.GetAllUsersHandler).Methods("GET")
-	router.HandleFunc("/user/id", getUserHandler).Methods("GET")
-	router.HandleFunc("/user/id", deleteUserHandler).Methods("DELETE")
+	router.HandleFunc("/user/id", handler.GetUserHandler).Methods("GET")
+	router.HandleFunc("/user/id", handler.DeleteUserHandler).Methods("DELETE")
 
 	log.Fatal(http.ListenAndServe(":8080", router))
-}
-
-func getUserHandler(w http.ResponseWriter, r *http.Request) {
-
-}
-
-func deleteUserHandler(w http.ResponseWriter, r *http.Request) {
-
 }
