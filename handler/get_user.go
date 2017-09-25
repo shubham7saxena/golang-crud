@@ -3,16 +3,21 @@ package handler
 import (
 	app "crud/appcontext"
 	"fmt"
+	"log"
 	"net/http"
+	"strconv"
 )
 
 const (
-	readOneQuery = "SELECT from users WHERE id='%d'"
+	readOneQuery = "SELECT age,name from users WHERE id='%d'"
 )
 
 func GetUserHandler(w http.ResponseWriter, r *http.Request) {
 	db := app.GetDB()
-	data, err := db.Query(readOneQuery)
+	params := r.URL.Query()
+	userIDStr := params.Get("id")
+	userID, err := strconv.Atoi(userIDStr)
+	data, err := db.Query(fmt.Sprintf(readOneQuery, userID))
 
 	if err != nil {
 		fmt.Println("error in reading the user from database")
@@ -20,6 +25,14 @@ func GetUserHandler(w http.ResponseWriter, r *http.Request) {
 
 	var age int
 	var name string
-	data.Scan(&age, &name)
-	fmt.Printf("age: %d, name: %s \n", age, name)
+
+	for data.Next() {
+
+		err = data.Scan(&age, &name)
+		if err != nil {
+			log.Fatal(err)
+		}
+
+		fmt.Printf("age: %d, name: %s \n", age, name)
+	}
 }

@@ -13,11 +13,6 @@ import (
 	_ "github.com/lib/pq"
 )
 
-type user struct {
-	name string
-	age  int
-}
-
 var db *sql.DB
 
 func main() {
@@ -33,8 +28,8 @@ func main() {
 	router.HandleFunc("/ping", handler.PingHandler).Methods("GET")
 	router.HandleFunc("/user", handler.CreateNewUserHandler).Methods("PUT")
 	router.HandleFunc("/users", handler.GetAllUsersHandler).Methods("GET")
-	router.HandleFunc("/user/id", handler.GetUserHandler).Methods("GET")
-	router.HandleFunc("/user/id", handler.DeleteUserHandler).Methods("DELETE")
+	router.HandleFunc("/user", handler.GetUserHandler).Methods("GET")
+	router.HandleFunc("/user", handler.DeleteUserHandler).Methods("DELETE")
 
 	log.Fatal(http.ListenAndServe(":8080", router))
 }
