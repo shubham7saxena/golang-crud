@@ -29,4 +29,5 @@ func DeleteUserHandler(w http.ResponseWriter, r *http.Request) {
 		log.Fatal(err)
 	}
 
+	w.WriteHeader(http.StatusOK)
 }

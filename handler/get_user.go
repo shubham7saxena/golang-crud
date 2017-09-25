@@ -2,8 +2,8 @@ package handler
 
 import (
 	app "crud/appcontext"
+	"encoding/json"
 	"fmt"
-	"log"
 	"net/http"
 	"strconv"
 
@@ -11,29 +11,34 @@ import (
 )
 
 const (
-	readOneQuery = "SELECT age,name from users WHERE id='%d'"
+	readOneQuery = "SELECT * from users WHERE id='%d'"
 )
+
+type User struct {
+	Id   int    `json:"id,omitempty"`
+	Age  int    `json:"age,omitempty"`
+	Name string `json:"name,omitempty"`
+}
 
 func GetUserHandler(w http.ResponseWriter, r *http.Request) {
 	db := app.GetDB()
 	params := mux.Vars(r)
 	userID, err := strconv.Atoi(params["id"])
-	data, err := db.Query(fmt.Sprintf(readOneQuery, userID))
+	data := db.QueryRow(fmt.Sprintf(readOneQuery, userID))
+
+	userData := User{}
+
+	err = data.Scan(&userData.Age, &userData.Name, &userData.Id)
 
 	if err != nil {
-		log.Fatal(err)
+		w.WriteHeader(http.StatusNotFound)
 	}
 
-	var age int
-	var name string
-
-	for data.Next() {
-
-		err = data.Scan(&age, &name)
-		if err != nil {
-			log.Fatal(err)
-		}
-
-		fmt.Printf("age: %d, name: %s \n", age, name)
+	response, err := json.Marshal(userData)
+	if err != nil {
+		fmt.Println(err)
 	}
+	w.WriteHeader(http.StatusOK)
+	w.Header().Set("Content-Type", "application/json")
+	w.Write([]byte(response))
 }

@@ -2,7 +2,6 @@ package handler
 
 import (
 	app "crud/appcontext"
-	"fmt"
 	"net/http"
 	"strconv"
 )
@@ -18,14 +17,13 @@ func CreateNewUserHandler(w http.ResponseWriter, r *http.Request) {
 	ageStr := params.Get("age")
 	age, err := strconv.Atoi(ageStr)
 	if err != nil {
-		http.Error(w, err.Error(), http.StatusBadRequest)
-		return
+		w.WriteHeader(http.StatusInternalServerError)
 	}
 
-	fmt.Println(age)
-	fmt.Println(name)
 	_, err = db.Exec(insertQuery, age, name)
 	if err != nil {
-		fmt.Println("Error creating a new record")
+		w.WriteHeader(http.StatusInternalServerError)
 	}
+
+	w.WriteHeader(http.StatusOK)
 }

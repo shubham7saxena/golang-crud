@@ -2,13 +2,14 @@ package handler
 
 import (
 	app "crud/appcontext"
+	"encoding/json"
 	"fmt"
 	"log"
 	"net/http"
 )
 
 const (
-	readAllQuery = "SELECT age, name from users limit 10"
+	readAllQuery = "SELECT age, name, id from users limit 10"
 )
 
 func GetAllUsersHandler(w http.ResponseWriter, r *http.Request) {
@@ -19,15 +20,24 @@ func GetAllUsersHandler(w http.ResponseWriter, r *http.Request) {
 		log.Fatal(err)
 	}
 
-	defer data.Close()
-	var age int
-	var name string
-
-	for data.Next() {
-		err := data.Scan(&age, &name)
+	userData := User{}
+	allUserData := make([]User, 0, 10)
+	for i := 0; data.Next(); i++ {
+		err := data.Scan(&userData.Age, &userData.Name, &userData.Id)
 		if err != nil {
-			log.Fatal(err)
+			fmt.Println(err)
+			w.WriteHeader(http.StatusInternalServerError)
 		}
-		fmt.Printf("age: %d, name: %s \n", age, name)
+		allUserData = append(allUserData, userData)
 	}
+
+	response, err := json.Marshal(allUserData)
+
+	if err != nil {
+		fmt.Println(err)
+	}
+
+	w.WriteHeader(http.StatusOK)
+	w.Header().Set("Content-Type", "application/json")
+	w.Write([]byte(response))
 }
