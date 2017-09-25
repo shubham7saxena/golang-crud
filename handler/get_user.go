@@ -6,6 +6,8 @@ import (
 	"log"
 	"net/http"
 	"strconv"
+
+	"github.com/gorilla/mux"
 )
 
 const (
@@ -14,13 +16,12 @@ const (
 
 func GetUserHandler(w http.ResponseWriter, r *http.Request) {
 	db := app.GetDB()
-	params := r.URL.Query()
-	userIDStr := params.Get("id")
-	userID, err := strconv.Atoi(userIDStr)
+	params := mux.Vars(r)
+	userID, err := strconv.Atoi(params["id"])
 	data, err := db.Query(fmt.Sprintf(readOneQuery, userID))
 
 	if err != nil {
-		fmt.Println("error in reading the user from database")
+		log.Fatal(err)
 	}
 
 	var age int
