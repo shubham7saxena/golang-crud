@@ -2,14 +2,13 @@ package main
 
 import (
 	app "crud/appcontext"
-	"crud/handler"
+	"crud/server"
 	"fmt"
 	"log"
 	"net/http"
 
 	sql "database/sql"
 
-	"github.com/gorilla/mux"
 	_ "github.com/lib/pq"
 )
 
@@ -24,12 +23,6 @@ func main() {
 		fmt.Println("couldn't connect to the database")
 	}
 
-	router := mux.NewRouter()
-	router.HandleFunc("/ping", handler.PingHandler).Methods("GET")
-	router.HandleFunc("/user", handler.CreateNewUserHandler).Methods("PUT")
-	router.HandleFunc("/users", handler.GetAllUsersHandler).Methods("GET")
-	router.HandleFunc("/user", handler.GetUserHandler).Methods("GET")
-	router.HandleFunc("/user", handler.DeleteUserHandler).Methods("DELETE")
-
+	router := server.Router()
 	log.Fatal(http.ListenAndServe(":8080", router))
 }
