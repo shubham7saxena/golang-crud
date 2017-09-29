@@ -1,6 +1,10 @@
-hash: fcf07f2076a640215f43d1093a1e3e1fc5f596f3d6f714e908536e2db9b015f1
-updated: 2017-09-15T19:04:26.179195616+05:30
+hash: a18ee610f3ef118c5c15b7baf3d73a9eaf2877f6d7da3d3ae6617a770e086fc9
+updated: 2017-09-25T23:23:12.19458951+05:30
 imports:
+- name: github.com/garyburd/redigo
+  version: 433969511232c397de61b1442f9fd49ec06ae9ba
+  subpackages:
+  - redis
 - name: github.com/getsentry/raven-go
   version: dffeb57df75d6a911f00232155194e43d79d38d7
 - name: github.com/gorilla/context

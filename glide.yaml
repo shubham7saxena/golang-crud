@@ -5,3 +5,4 @@ import:
     - package: github.com/newrelic/go-agent
     - package: github.com/jmoiron/sqlx
     - package: github.com/lib/pq
+    - package: github.com/garyburd/redigo/redis

@@ -1,29 +1,34 @@
 package handler
 
 import (
-	app "crud/appcontext"
+	"crud/contract"
+	domain "crud/domain"
+	"crud/repository"
+	"encoding/json"
+	"fmt"
 	"net/http"
-	"strconv"
-)
-
-const (
-	insertQuery = "INSERT INTO users (age, name) VALUES($1, $2)"
 )
 
 func CreateNewUserHandler(w http.ResponseWriter, r *http.Request) {
-	db := app.GetDB()
-	params := r.URL.Query()
-	name := params.Get("name")
-	ageStr := params.Get("age")
-	age, err := strconv.Atoi(ageStr)
+	var userRequest contract.User
+	err := json.NewDecoder(r.Body).Decode(&userRequest)
+	if err != nil {
+		http.Error(w, fmt.Sprintf("error : %s", err.Error()), http.StatusBadRequest)
+		return
+	}
+
+	if userRequest.IsInvalid() {
+		http.Error(w, "User's name and age are mandatory. Age cannot be negative", http.StatusBadRequest)
+		return
+	}
+
+	user := domain.NewUser(&userRequest)
+
+	err = repository.NewUserRepository().Insert(user)
+
 	if err != nil {
 		w.WriteHeader(http.StatusInternalServerError)
 	}
 
-	_, err = db.Exec(insertQuery, age, name)
-	if err != nil {
-		w.WriteHeader(http.StatusInternalServerError)
-	}
-
-	w.WriteHeader(http.StatusOK)
+	w.WriteHeader(http.StatusCreated)
 }
