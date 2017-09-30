@@ -1,32 +1,40 @@
 package appcontext
 
 import (
+	"crud/config"
 	sql "database/sql"
-	"fmt"
+	"log"
 
 	_ "github.com/lib/pq"
 )
 
-var db *sql.DB
-
-func InitDB() (*sql.DB, error) {
-	var err error
-	db, err = sql.Open("postgres", dbConnectionString())
-
-	if err != nil {
-		fmt.Println("Error connecting to the database")
-	}
-
-	if err = db.Ping(); err != nil {
-		fmt.Printf("Ping to database host failed: %s \n", err)
-	}
-	return db, err
+type appContext struct {
+	db *sql.DB
 }
 
-func dbConnectionString() string {
-	return fmt.Sprintf("dbname=%s user=%s password='%s' sslmode=disable", "test", "postgres", "s7saxena")
+var context *appContext
+
+func Initiate() {
+	db := initDB()
+	context = &appContext{
+		db: db,
+	}
 }
 
 func GetDB() *sql.DB {
+	return context.db
+}
+
+func initDB() *sql.DB {
+	var err error
+	db, err := sql.Open("postgres", config.NewDBConfig().GetConnectionString())
+
+	if err != nil {
+		log.Fatalf("Error connecting to the database")
+	}
+
+	if err = db.Ping(); err != nil {
+		log.Fatalf("Ping to database host failed: %s \n", err)
+	}
 	return db
 }
