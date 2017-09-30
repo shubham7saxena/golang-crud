@@ -8,8 +8,9 @@ import (
 )
 
 const (
-	readOneQuery = "SELECT * from users WHERE id='%d'"
-	insertQuery  = "INSERT INTO users (age, name) VALUES($1, $2)"
+	readOneQuery    = "SELECT * from users WHERE id='%d'"
+	insertQuery     = "INSERT INTO users (age, name) VALUES($1, $2)"
+	deleteUserQuery = "DELETE from users where id='%d'"
 )
 
 type userRepository struct {
@@ -24,6 +25,28 @@ func NewUserRepository() *userRepository {
 
 func (ur *userRepository) Insert(u *domain.User) error {
 	_, err := ur.db.Exec(insertQuery, u.Age, u.Name)
+
+	if err != nil {
+		fmt.Println(err)
+	}
+
+	return err
+}
+
+func (ur *userRepository) GetUser(userID int) (*domain.User, error) {
+	data := ur.db.QueryRow(fmt.Sprintf(readOneQuery, userID))
+	userData := domain.User{}
+	err := data.Scan(&userData.Age, &userData.Name, &userData.Id)
+
+	if err != nil {
+		return &domain.User{}, err
+	}
+
+	return &userData, nil
+}
+
+func (ur *userRepository) DeleteUser(userID int) error {
+	_, err := ur.db.Exec(fmt.Sprintf(deleteUserQuery, userID))
 
 	if err != nil {
 		fmt.Println(err)

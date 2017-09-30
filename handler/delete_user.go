@@ -1,32 +1,29 @@
 package handler
 
 import (
-	app "crud/appcontext"
+	"crud/repository"
 	"fmt"
-	"log"
 	"net/http"
 	"strconv"
 
 	"github.com/gorilla/mux"
 )
 
-const (
-	deleteUserQuery = "DELETE from users where id='%d'"
-)
+const ()
 
 func DeleteUserHandler(w http.ResponseWriter, r *http.Request) {
-	db := app.GetDB()
 	params := mux.Vars(r)
 	userID, err := strconv.Atoi(params["id"])
 
 	if err != nil {
-		log.Fatal(err)
+		fmt.Println(err)
+		http.Error(w, fmt.Sprintf("error: %s", err.Error()), http.StatusBadRequest)
 	}
 
-	_, err = db.Exec(fmt.Sprintf(deleteUserQuery, userID))
+	err = repository.NewUserRepository().DeleteUser(userID)
 
 	if err != nil {
-		log.Fatal(err)
+		w.WriteHeader(http.StatusInternalServerError)
 	}
 
 	w.WriteHeader(http.StatusOK)
