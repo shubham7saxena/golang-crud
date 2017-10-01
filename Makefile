@@ -1,8 +1,13 @@
 all: build
 
+APP=crud-app
+APP_EXECUTABLE="./out/$(APP)"
+
 build-deps:
 	glide install
 
-build: build-deps
+compile:
+	go build -o $(APP_EXECUTABLE)
 
+build: build-deps compile
 
