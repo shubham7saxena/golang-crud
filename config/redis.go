@@ -7,20 +7,20 @@ type redisConfig struct {
 	idleTimeout int
 }
 
-func (self *redisConfig) URI() string {
-	return self.redisURI
+func (conf *redisConfig) URI() string {
+	return conf.redisURI
 }
 
-func (self *redisConfig) MaxConn() int {
-	return self.maxConn
+func (conf *redisConfig) MaxConn() int {
+	return conf.maxConn
 }
 
-func (self *redisConfig) IdleConn() int {
-	return self.idleConn
+func (conf *redisConfig) IdleConn() int {
+	return conf.idleConn
 }
 
-func (self *redisConfig) IdleTimeout() int {
-	return self.idleTimeout
+func (conf *redisConfig) IdleTimeout() int {
+	return conf.idleTimeout
 }
 
 func NewRedisConfig() *redisConfig {
