@@ -23,7 +23,7 @@ func (conf *redisConfig) IdleTimeout() int {
 	return conf.idleTimeout
 }
 
-func NewRedisConfig() *redisConfig {
+func newRedisConfig() *redisConfig {
 	return &redisConfig{
 		redisURI:    "localhost:6379",
 		maxConn:     5,

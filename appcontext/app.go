@@ -33,7 +33,7 @@ func GetDB() *sql.DB {
 
 func initDB() *sql.DB {
 	var err error
-	db, err := sql.Open("postgres", config.NewDBConfig().GetConnectionString())
+	db, err := sql.Open("postgres", config.DbConfig().GetConnectionString())
 
 	if err != nil {
 		log.Fatalf("Error connecting to the database")
@@ -46,7 +46,7 @@ func initDB() *sql.DB {
 }
 
 func initRedis() *redis.Pool {
-	conf := config.NewRedisConfig()
+	conf := config.RedisConfig()
 	redis := &redis.Pool{
 		MaxIdle:     conf.IdleConn(),
 		MaxActive:   conf.MaxConn(),

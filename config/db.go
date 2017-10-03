@@ -10,7 +10,7 @@ type dbConfig struct {
 	password     string
 }
 
-func NewDBConfig() *dbConfig {
+func newDBConfig() *dbConfig {
 	return &dbConfig{
 		host:         "localhost",
 		port:         5432,
