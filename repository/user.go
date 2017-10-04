@@ -11,6 +11,7 @@ const (
 	readOneQuery    = "SELECT * from users WHERE id='%d'"
 	insertQuery     = "INSERT INTO users (age, name) VALUES($1, $2)"
 	deleteUserQuery = "DELETE from users where id='%d'"
+	updateUserQuery = "Update users set age='%d', name='%s' where id='%d'"
 )
 
 type userRepository struct {
@@ -52,5 +53,13 @@ func (ur *userRepository) DeleteUser(userID int) error {
 		fmt.Println(err)
 	}
 
+	return err
+}
+
+func (ur *userRepository) UpdateUser(u *domain.User) error {
+	_, err := ur.db.Exec(fmt.Sprintf(updateUserQuery, u.Age, u.Name, u.Id))
+	if err != nil {
+		fmt.Println(err)
+	}
 	return err
 }

@@ -14,6 +14,6 @@ func Router() http.Handler {
 	router.HandleFunc("/user", handler.CreateNewUserHandler).Methods("POST")
 	router.HandleFunc("/user/{id}", handler.GetUserHandler).Methods("GET")
 	router.HandleFunc("/user/{id}", handler.DeleteUserHandler).Methods("DELETE")
-
+	router.HandleFunc("/user/{id}", handler.UpdateUserHandler).Methods("PUT")
 	return router
 }
