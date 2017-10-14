@@ -6,3 +6,5 @@ import:
     - package: github.com/jmoiron/sqlx
     - package: github.com/lib/pq
     - package: github.com/garyburd/redigo/redis
+    - package: github.com/Sirupsen/logrus
+
