@@ -1,6 +1,8 @@
-hash: 0b56380831a0fa61eabeba9296965d0fc44b6805c2b46d9d466b4a2f388d9387
-updated: 2017-10-14T10:15:01.563660987+05:30
+hash: d367e272b3b4648a18b58d50b7ead4690f8e0c5417cc2a140d47c40ea55d21c2
+updated: 2017-10-14T10:34:07.475798642+05:30
 imports:
+- name: github.com/BurntSushi/toml
+  version: 056c9bc7be7190eaa7715723883caffa5f8fa3e4
 - name: github.com/garyburd/redigo
   version: 433969511232c397de61b1442f9fd49ec06ae9ba
   subpackages:
@@ -14,16 +16,34 @@ imports:
   version: 392c28fe23e1c45ddba891b0320b3b5df220beea
 - name: github.com/jmoiron/sqlx
   version: 56b62f29e9936b8fc0db14ed01297f88ba518333
+- name: github.com/kr/pretty
+  version: e6ac2fc51e89a3249e82157fa0bb7a18ef9dd5bb
+- name: github.com/kr/text
+  version: e373e137fafd8abd480af49182dea0513914adb4
 - name: github.com/lib/pq
   version: dc50b6ad2d3ee836442cf3389009c7cd1e64bb43
   subpackages:
   - oid
+- name: github.com/magiconair/properties
+  version: e16141290883c13645e0c7c1b3507af621f8ed8a
+- name: github.com/mitchellh/mapstructure
+  version: 281073eb9eb092240d33ef253c404f1cca550309
 - name: github.com/newrelic/go-agent
   version: 60ed7aa03a85a1355b4189f66e23604de8f27d57
 - name: github.com/Sirupsen/logrus
   version: ba1b36c82c5e05c4f912a88eab0dcd91a171688f
+- name: github.com/spf13/cast
+  version: 4d07383ffe94b5e5a6fa3af9211374a4507a0184
+- name: github.com/spf13/jwalterweatherman
+  version: 3d60171a64319ef63c78bd45bd60e6eab1e75f8b
+- name: github.com/spf13/pflag
+  version: 67cbc198fd11dab704b214c1e629a97af392c085
+- name: github.com/spf13/viper
+  version: db7ff930a189b98d602179d9001d33345f42b8c7
 - name: golang.org/x/sys
   version: c200b10b5d5e122be351b67af224adc6128af5bf
   subpackages:
   - unix
+- name: gopkg.in/yaml.v2
+  version: 7ad95dd0798a40da1ccdff6dff35fd177b5edf40
 testImports: []

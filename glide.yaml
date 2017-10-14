@@ -7,4 +7,5 @@ import:
     - package: github.com/lib/pq
     - package: github.com/garyburd/redigo/redis
     - package: github.com/Sirupsen/logrus
+    - package: github.com/spf13/viper
 

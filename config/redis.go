@@ -1,5 +1,9 @@
 package config
 
+import (
+	"crud/utils"
+)
+
 type redisConfig struct {
 	redisURI    string
 	maxConn     int
@@ -25,9 +29,9 @@ func (conf *redisConfig) IdleTimeout() int {
 
 func newRedisConfig() *redisConfig {
 	return &redisConfig{
-		redisURI:    "localhost:6379",
-		maxConn:     5,
-		idleConn:    5,
-		idleTimeout: 5,
+		redisURI:    utils.FatalGetString("redis_uri"),
+		maxConn:     utils.GetIntOrPanic("redis_max_conn"),
+		idleConn:    utils.GetIntOrPanic("redis_idle_conn"),
+		idleTimeout: utils.GetIntOrPanic("redis_idle_timeout"),
 	}
 }

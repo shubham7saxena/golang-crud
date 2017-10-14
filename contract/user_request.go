@@ -5,7 +5,3 @@ type User struct {
 	Age  int    `json:"age,omitempty"`
 	Name string `json:"name,omitempty"`
 }
-
-func (u *User) IsInvalid() bool {
-	return u.Age < 0
-}

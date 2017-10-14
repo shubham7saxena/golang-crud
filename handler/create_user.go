@@ -17,11 +17,6 @@ func CreateNewUserHandler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	if userRequest.IsInvalid() {
-		http.Error(w, "User's name and age are mandatory. Age cannot be negative", http.StatusBadRequest)
-		return
-	}
-
 	user := domain.NewUser(&userRequest)
 
 	err = repository.NewUserRepository().Insert(user)

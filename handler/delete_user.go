@@ -9,8 +9,6 @@ import (
 	"github.com/gorilla/mux"
 )
 
-const ()
-
 func DeleteUserHandler(w http.ResponseWriter, r *http.Request) {
 	params := mux.Vars(r)
 	userID, err := strconv.Atoi(params["id"])

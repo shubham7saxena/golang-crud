@@ -3,7 +3,6 @@ package handler
 import (
 	domain "crud/domain"
 	"crud/repository"
-	"crud/utils"
 	"encoding/json"
 	"fmt"
 	"net/http"

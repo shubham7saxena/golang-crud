@@ -1,6 +1,9 @@
 package config
 
-import "fmt"
+import (
+	"crud/utils"
+	"fmt"
+)
 
 type dbConfig struct {
 	host         string
@@ -12,11 +15,11 @@ type dbConfig struct {
 
 func newDBConfig() *dbConfig {
 	return &dbConfig{
-		host:         "localhost",
-		port:         5432,
-		username:     "postgres",
-		databaseName: "test",
-		password:     "s7saxena",
+		host:         utils.FatalGetString("DB_HOST"),
+		port:         utils.GetIntOrPanic("DB_PORT"),
+		databaseName: utils.FatalGetString("DB_NAME"),
+		username:     utils.GetString("DB_USER"),
+		password:     utils.GetString("DB_PASSWORD"),
 	}
 }
 
