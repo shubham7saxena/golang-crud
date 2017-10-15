@@ -1,5 +1,5 @@
-hash: d367e272b3b4648a18b58d50b7ead4690f8e0c5417cc2a140d47c40ea55d21c2
-updated: 2017-10-14T10:34:07.475798642+05:30
+hash: dfa848b19575b3907ae4003444c5942417a8ee39388d3f06bf2a2dc41e6a6d8b
+updated: 2017-10-15T20:08:53.035932727+05:30
 imports:
 - name: github.com/BurntSushi/toml
   version: 056c9bc7be7190eaa7715723883caffa5f8fa3e4
@@ -40,10 +40,20 @@ imports:
   version: 67cbc198fd11dab704b214c1e629a97af392c085
 - name: github.com/spf13/viper
   version: db7ff930a189b98d602179d9001d33345f42b8c7
-- name: golang.org/x/sys
-  version: c200b10b5d5e122be351b67af224adc6128af5bf
+- name: github.com/stretchr/testify
+  version: 69483b4bd14f5845b5a1e55bca19e954e827f1d0
   subpackages:
-  - unix
+  - assert
+  - require
+  - suite
 - name: gopkg.in/yaml.v2
   version: 7ad95dd0798a40da1ccdff6dff35fd177b5edf40
-testImports: []
+testImports:
+- name: github.com/davecgh/go-spew
+  version: 6d212800a42e8ab5c146b8ace3490ee17e5225f9
+  subpackages:
+  - spew
+- name: github.com/pmezard/go-difflib
+  version: d8ed2627bdf02c080bf22230dbb337003b7aba2d
+  subpackages:
+  - difflib

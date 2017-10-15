@@ -28,7 +28,7 @@ func (ur *userRepository) Insert(u *domain.User) error {
 	_, err := ur.db.Exec(insertQuery, u.Age, u.Name)
 
 	if err != nil {
-		fmt.Println(err)
+		fmt.Errorf("Error: %s", err)
 	}
 
 	return err
@@ -50,7 +50,7 @@ func (ur *userRepository) DeleteUser(userID int) error {
 	_, err := ur.db.Exec(fmt.Sprintf(deleteUserQuery, userID))
 
 	if err != nil {
-		fmt.Println(err)
+		fmt.Errorf("Error: %s", err)
 	}
 
 	return err
@@ -59,7 +59,7 @@ func (ur *userRepository) DeleteUser(userID int) error {
 func (ur *userRepository) UpdateUser(u *domain.User) error {
 	_, err := ur.db.Exec(fmt.Sprintf(updateUserQuery, u.Age, u.Name, u.Id))
 	if err != nil {
-		fmt.Println(err)
+		fmt.Errorf("Error: %s", err)
 	}
 	return err
 }
