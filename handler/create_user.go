@@ -3,7 +3,7 @@ package handler
 import (
 	"crud/contract"
 	domain "crud/domain"
-	"crud/repository"
+	"crud/service"
 	"encoding/json"
 	"fmt"
 	"net/http"
@@ -19,7 +19,7 @@ func CreateNewUserHandler(w http.ResponseWriter, r *http.Request) {
 
 	user := domain.NewUser(&userRequest)
 
-	err = repository.NewUserRepository().Insert(user)
+	err = service.InsertUserData(user)
 
 	if err != nil {
 		w.WriteHeader(http.StatusInternalServerError)

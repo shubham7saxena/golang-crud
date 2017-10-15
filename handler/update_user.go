@@ -3,8 +3,7 @@ package handler
 import (
 	"crud/contract"
 	domain "crud/domain"
-	"crud/repository"
-	"crud/utils"
+	"crud/service"
 	"encoding/json"
 	"fmt"
 	"net/http"
@@ -16,53 +15,37 @@ import (
 func UpdateUserHandler(w http.ResponseWriter, r *http.Request) {
 	params := mux.Vars(r)
 	userID, err := strconv.Atoi(params["id"])
-	existingUser, err := repository.NewUserRepository().GetUser(userID)
-
-	if *existingUser == (domain.User{}) {
-		http.Error(w, fmt.Sprintf("The user with the given ID does not exist"), http.StatusBadRequest)
-		return
-	}
-
 	var userRequest contract.User
 	err = json.NewDecoder(r.Body).Decode(&userRequest)
 
 	if err != nil {
 		http.Error(w, fmt.Sprintf("error : %s", err.Error()), http.StatusBadRequest)
-		return
 	}
 
-	if userRequest.IsInvalid() {
-		http.Error(w, "User's name and age are mandatory. Age cannot be negative", http.StatusBadRequest)
-		return
+	if !userExists(userID) {
+		http.Error(w, fmt.Sprintf("The user with the given ID does not exist"), http.StatusBadRequest)
 	}
 
 	updatedUser := domain.NewUser(&userRequest)
 
-	err = repository.NewUserRepository().UpdateUser(updatedUser)
+	err = service.UpdateUserData(updatedUser, userID)
 
 	if err != nil {
 		http.Error(w, fmt.Sprintf("error: %s", err.Error()), http.StatusInternalServerError)
 	}
 
-	userRedisKey := "user_" + params["id"]
-	fmt.Println(userRedisKey)
-	rp := utils.GetNewRedisPool()
+	w.Header().Set("Content-Type", "application/json")
+	w.WriteHeader(http.StatusOK)
+}
 
-	keyExists, err := rp.Exists(userRedisKey)
-
-	if keyExists == true {
-		response, err := json.Marshal(updatedUser)
-		if err != nil {
-			http.Error(w, fmt.Sprintf("Error marshalling user"), http.StatusInternalServerError)
-			return
-		}
-
-		err = rp.Set(userRedisKey, response)
-		if err != nil {
-			http.Error(w, fmt.Sprintf("Error setting the updated user to redis"), http.StatusInternalServerError)
-		}
+func userExists(id int) bool {
+	existingUser, err := service.GetUserData(id)
+	if err != nil {
+		fmt.Errorf("Error checking user in database")
 	}
 
-	w.WriteHeader(http.StatusOK)
-	return
+	if *existingUser == (domain.User{}) {
+		return false
+	}
+	return true
 }

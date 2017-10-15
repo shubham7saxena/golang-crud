@@ -1,4 +1,4 @@
-package utils
+package repository
 
 import (
 	"crud/appcontext"
@@ -29,41 +29,41 @@ func (r *redisPool) Ping() error {
 	return nil
 }
 
-func (r *redisPool) Get(key string) ([]byte, error, bool) {
+func (r *redisPool) Get(key string) ([]byte, bool) {
 
 	conn := r.pool.Get()
 	defer conn.Close()
 
-	var data []byte
 	data, err := redis.Bytes(conn.Do("GET", key))
 	if err != nil {
-		return data, fmt.Errorf("error getting key %s: %v", key, err), false
+		fmt.Errorf("error getting key from redis")
+		return data, false
 	}
-	return data, err, true
+	return data, true
 }
 
-func (r *redisPool) Set(key string, value []byte) error {
+func (r *redisPool) Set(key string, value []byte) {
 
 	conn := r.pool.Get()
 	defer conn.Close()
 
 	_, err := conn.Do("SET", key, value)
 	if err != nil {
-		return fmt.Errorf("error setting key %s to %s: %v", key, value, err)
+		fmt.Errorf("Error setting key in redis")
 	}
-	return err
 }
 
-func (r *redisPool) Exists(key string) (bool, error) {
+func (r *redisPool) Exists(key string) bool {
 
 	conn := r.pool.Get()
 	defer conn.Close()
 
 	ok, err := redis.Bool(conn.Do("EXISTS", key))
 	if err != nil {
-		return ok, fmt.Errorf("error checking if key %s exists: %v", key, err)
+		fmt.Errorf("cannot check key existence in redis")
+		return false
 	}
-	return ok, err
+	return ok
 }
 
 func (r *redisPool) Delete(key string) error {

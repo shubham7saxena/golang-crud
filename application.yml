@@ -1,0 +1,11 @@
+REDIS_URI: "localhost:6379"
+REDIS_MAX_CONN: 5
+REDIS_IDLE_CONN: 5
+REDIS_IDLE_TIMEOUT: 5
+
+DB_HOST: "localhost"
+DB_PORT: 5432
+DB_NAME: "test"
+DB_USER: "postgres"
+DB_PASSWORD: "s7saxena"
+

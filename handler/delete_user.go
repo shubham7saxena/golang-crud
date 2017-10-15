@@ -1,7 +1,7 @@
 package handler
 
 import (
-	"crud/repository"
+	"crud/service"
 	"fmt"
 	"net/http"
 	"strconv"
@@ -18,7 +18,7 @@ func DeleteUserHandler(w http.ResponseWriter, r *http.Request) {
 		http.Error(w, fmt.Sprintf("error: %s", err.Error()), http.StatusBadRequest)
 	}
 
-	err = repository.NewUserRepository().DeleteUser(userID)
+	err = service.DeleteUserData(userID)
 
 	if err != nil {
 		w.WriteHeader(http.StatusInternalServerError)
