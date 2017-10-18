@@ -9,5 +9,7 @@ import:
     - package: github.com/Sirupsen/logrus
     - package: github.com/spf13/viper
     - package: github.com/stretchr/testify/suite
- 
+    - package: github.com/mattes/migrate
+      version: v3.0.1
+    - package: github.com/urfave/cli
 

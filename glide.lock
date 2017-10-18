@@ -1,5 +1,5 @@
-hash: dfa848b19575b3907ae4003444c5942417a8ee39388d3f06bf2a2dc41e6a6d8b
-updated: 2017-10-15T20:08:53.035932727+05:30
+hash: 220eb2d0c69b97a8d969235c746a3478fe51bd7be51622ed0c47c7158392e38f
+updated: 2017-10-18T13:34:46.103509675+05:30
 imports:
 - name: github.com/BurntSushi/toml
   version: 056c9bc7be7190eaa7715723883caffa5f8fa3e4
@@ -26,6 +26,13 @@ imports:
   - oid
 - name: github.com/magiconair/properties
   version: e16141290883c13645e0c7c1b3507af621f8ed8a
+- name: github.com/mattes/migrate
+  version: 035c07716cd373d88456ec4d701402df52584cb4
+  subpackages:
+  - database
+  - database/postgres
+  - source
+  - source/file
 - name: github.com/mitchellh/mapstructure
   version: 281073eb9eb092240d33ef253c404f1cca550309
 - name: github.com/newrelic/go-agent
@@ -46,6 +53,8 @@ imports:
   - assert
   - require
   - suite
+- name: github.com/urfave/cli
+  version: 0bdeddeeb0f650497d603c4ad7b20cfe685682f6
 - name: gopkg.in/yaml.v2
   version: 7ad95dd0798a40da1ccdff6dff35fd177b5edf40
 testImports:

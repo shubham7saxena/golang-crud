@@ -26,3 +26,7 @@ func newDBConfig() *dbConfig {
 func (dc *dbConfig) GetConnectionString() string {
 	return fmt.Sprintf("dbname=%s user=%s password='%s' sslmode=disable", dc.databaseName, dc.username, dc.password)
 }
+
+func (dc *dbConfig) ConnectionURL() string {
+	return fmt.Sprintf("postgres://%s:%s@%s:%d/%s?sslmode=disable", dc.username, dc.password, dc.host, dc.port, dc.databaseName)
+}
